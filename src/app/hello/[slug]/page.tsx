@@ -15,9 +15,22 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
 
   const { data } = await import(`data/${params.slug}.json`);
 
-  return <h1>{data}</h1>;
+  return (
+    <main>
+      <h1>{data}</h1>
+      <p>
+        Page generated at{" "}
+        <time dateTime={new Date().toISOString()}>
+          {new Date().toISOString()}
+        </time>
+        .
+      </p>
+    </main>
+  );
 }
 
-// export async function generateStaticParams(): Promise<Params[]> {
-//   return [{ slug: "foo" }, { slug: "bar" }, { slug: "baz" }];
-// }
+export const revalidate = 10;
+
+export async function generateStaticParams(): Promise<Params[]> {
+  return [{ slug: "foo" }, { slug: "bar" }, { slug: "baz" }];
+}
